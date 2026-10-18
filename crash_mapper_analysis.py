@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import json
-import os
 
 pd.set_option("display.width",200)
 
@@ -9,7 +8,6 @@ df=pd.read_csv("data.csv")
 
 df.info
 
-#print (df.columns)
 
 df["date_time"]=pd.to_datetime(df["date_time"])
 
@@ -100,6 +98,8 @@ for boro, row in stats.sort_values("sum", ascending=False).iterrows():
         "factor": top_values("contributing_factors", boro, 1),
         "vehicles": top_values("vehicle_types", boro, 3),
     })
+
+# for html file
 
 with open("borough_data.json", "w") as f:
     json.dump(chart, f, indent=1)

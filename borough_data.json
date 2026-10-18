@@ -1,0 +1,52 @@
+[
+ {
+  "borough": "brooklyn",
+  "crashes": 16800,
+  "injured": 22376,
+  "mean": 1.332,
+  "max": 20,
+  "percent": 33.0,
+  "factor": "driver inattention/distraction",
+  "vehicles": "sedan, station wagon/sport utility vehicle, bike"
+ },
+ {
+  "borough": "queens",
+  "crashes": 14744,
+  "injured": 19842,
+  "mean": 1.346,
+  "max": 20,
+  "percent": 29.3,
+  "factor": "driver inattention/distraction",
+  "vehicles": "sedan, station wagon/sport utility vehicle, bike"
+ },
+ {
+  "borough": "bronx",
+  "crashes": 8420,
+  "injured": 11942,
+  "mean": 1.418,
+  "max": 13,
+  "percent": 17.6,
+  "factor": "driver inattention/distraction",
+  "vehicles": "sedan, station wagon/sport utility vehicle, bike"
+ },
+ {
+  "borough": "manhattan",
+  "crashes": 8353,
+  "injured": 10167,
+  "mean": 1.217,
+  "max": 21,
+  "percent": 15.0,
+  "factor": "driver inattention/distraction",
+  "vehicles": "sedan, station wagon/sport utility vehicle, bike"
+ },
+ {
+  "borough": "staten island",
+  "crashes": 2506,
+  "injured": 3389,
+  "mean": 1.352,
+  "max": 13,
+  "percent": 5.0,
+  "factor": "driver inattention/distraction",
+  "vehicles": "sedan, station wagon/sport utility vehicle, 4 dr sedan"
+ }
+]
