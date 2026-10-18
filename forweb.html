@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>NYC Crash Injuries by Borough</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: Helvetica; margin: 30px; text-transform: lowercase; }
+    h1 { margin-bottom: 5px; }
+    .subtitle { color: #555; margin-top: 0; }
+    .source { color: #777; font-size: 12px; }
+    .bar:hover { fill: orange; }
+    #tooltip {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 13px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>traffic crashes in nyc by borough, sept 2024 to sept 2026</h1>
+<p class="subtitle">brooklyn and queens have the most crashes in the city</p>
+<p class="subtitle">hover over bar to see more</p>
+
+<div id="chart"></div>
+<div id="tooltip"></div>
+
+<p class="source">source: crashmapper.org, nyc open data</p>
+
+<script>
+const margin = { top: 20, right: 30, bottom: 50, left: 70 };
+const width = 800 - margin.left - margin.right;
+const height = 450 - margin.top - margin.bottom;
+
+const svg = d3.select("#chart")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+const tooltip = d3.select("#tooltip");
+
+// data made by hi.py
+d3.json("borough_data.json").then(function(data) {
+
+const x = d3.scaleBand()
+  .domain(data.map(d => d.borough))
+  .range([0, width])
+  .padding(0.3);
+
+const y = d3.scaleLinear()
+  .domain([0, d3.max(data, d => d.injured) * 1.1])
+  .range([height, 0]);
+
+svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x));
+
+svg.append("g").call(d3.axisLeft(y));
+
+// axis labels
+svg.append("text")
+  .attr("x", width / 2)
+  .attr("y", height + 40)
+  .attr("text-anchor", "middle")
+  .text("Borough");
+
+svg.append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("x", -height / 2)
+  .attr("y", -55)
+  .attr("text-anchor", "middle")
+  .text("People injured");
+
+svg.selectAll(".bar")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", d => x(d.borough))
+  .attr("y", d => y(d.injured))
+  .attr("width", x.bandwidth())
+  .attr("height", d => height - y(d.injured))
+  .attr("fill", "cadetblue")
+  .on("mouseover", function(event, d) {
+    tooltip.style("display", "block")
+      .html("<b>" + d.borough + "</b><br><br>" +
+            "Crashes: " + d.crashes.toLocaleString() + "<br>" +
+            "People injured: " + d.injured.toLocaleString() + "<br>" +
+            "Share of NYC injuries: " + d.percent + "%<br>" +
+            "Injuries per crash: " + d.mean + "<br>" +
+            "Most injured in one crash: " + d.max + "<br><br>" +
+            "Top cause: " + d.factor + "<br>" +
+            "Top vehicles: " + d.vehicles);
+  })
+  .on("mousemove", function(event) {
+    tooltip.style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY + 10) + "px");
+  })
+  .on("mouseout", function() {
+    tooltip.style("display", "none");
+  });
+
+// number on top of each bar
+svg.selectAll(".label")
+  .data(data)
+  .enter()
+  .append("text")
+  .attr("x", d => x(d.borough) + x.bandwidth() / 2)
+  .attr("y", d => y(d.injured) - 5)
+  .attr("text-anchor", "middle")
+  .attr("font-size", "12px")
+  .text(d => d.injured.toLocaleString());
+});
+</script>
+
+</body>
+</html>

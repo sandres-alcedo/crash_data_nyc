@@ -1,0 +1,246 @@
+step 1. 
+    street safety data in nyc
+
+step 2.
+    dataset Name: nyc crashes data
+    organization: nyc crash mapper
+    url: crashmapper.org 
+    date accessed: 10/11/26
+    description: interactive webpage to visualize transportation collisions in the city. meant to advocate for safer streets and traffic measures. publicly available data
+    time period covered: 2011-2026 ('24-'26 for this assignment)
+    geocoverage: nyc, from boroughs down to nta blocks
+    # of rows: 50,824
+    # of columns: 25
+    file format: csv
+    license and terms of use: extension of nyc open data, freee and open for public use
+
+step 3. 
+    important variables: person involved in crash (driver, motorist, cyclist, pedestrian), injured or killed, neighborhood attributes (address, borough), contributing factors
+    numerical: number of [injured or killed], crash counts
+    categorical: street name, contributing factors, vehicle types
+    time data: date_time
+    geo variables: lat, long, geom, cartodb, ~ website has geojson file export option
+    interesting variables: address, types of crashes, contributing factors
+    missing or unsual: some null values, not comprehensive since not DOT data, non-uniform data entries
+    potential limitations: maybe have to clean up/uniform data, vehicle types column is not uniform at all
+
+    data from summary stats below
+
+step 4.
+    what is the highest cause of accidents in nyc?
+    what type of mobility is most at risk in nyc?
+    which borough see the most amount of accidents?
+    can i see which intersections are the most dangerous?
+
+step 5.
+    showing type of accidents boroughs are dealing with
+    what type of vehicles are most at risk in the city
+    original interest came from trying to visualize what streets might be ripe to made safer through street design interventions
+    final result: intersection data to specfically find streets to "fix" didn't work out as planned, would need more time to explore this dataset and find a workaround without dot's more specific data since that is public, might have to be a more intense mapping project
+
+
+Rows:    50,824
+Columns: 25
+Date range: 2025-01-01 00:00:00+00:00  to  2026-06-11 13:08:00+00:00
+Boroughs: Queens, Bronx, Staten Island, Manhattan, Brooklyn
+Data columns (total 25 columns):
+ #   Column                        Non-Null Count  Dtype              
+---  ------                        --------------  -----              
+ 0   the_geom                      50824 non-null  str                
+ 1   cartodb_id                    50824 non-null  int64              
+ 2   socrata_id                    50824 non-null  int64              
+ 3   on_street_name                40895 non-null  str                
+ 4   cross_street_name             9929 non-null   str                
+ 5   date_time                     50824 non-null  datetime64[us, UTC]
+ 6   latitude                      50824 non-null  float64            
+ 7   longitude                     50824 non-null  float64            
+ 8   borough                       50823 non-null  str                
+ 9   zip_code                      39473 non-null  float64            
+ 10  crash_count                   50824 non-null  int64              
+ 11  number_of_cyclist_injured     50824 non-null  int64              
+ 12  number_of_cyclist_killed      50824 non-null  int64              
+ 13  number_of_motorist_injured    50824 non-null  int64              
+ 14  number_of_motorist_killed     50824 non-null  int64              
+ 15  number_of_pedestrian_injured  50824 non-null  int64              
+ 16  number_of_pedestrian_killed   50824 non-null  int64              
+ 17  number_of_persons_injured     50824 non-null  int64              
+ 18  number_of_persons_killed      50824 non-null  int64              
+ 19  contributing_factors          50059 non-null  str                
+ 20  vehicle_types                 49057 non-null  str                
+ 21  year                          50824 non-null  int32              
+ 22  hour                          50824 non-null  int32              
+ 23  weekday                       50824 non-null  str                
+ 24  intersection                  0 non-null      str                
+dtypes: datetime64[us, UTC](1), float64(3), int32(2), int64(11), str(8)
+memory usage: 9.3 MB
+                               mean  total  percent
+number_of_cyclist_injured     0.138   6993    5.212
+number_of_cyclist_killed      0.001     31    0.023
+number_of_motorist_injured    0.910  46235   34.459
+number_of_motorist_killed     0.002     97    0.072
+number_of_pedestrian_injured  0.249  12651    9.429
+number_of_pedestrian_killed   0.003    156    0.116
+number_of_persons_injured     1.332  67717   50.470
+number_of_persons_killed      0.006    294    0.219
+               count  min  max   mean    sum  largest_crash  percent
+borough                                                             
+Bronx           8420    0   13  1.418  11942             13   17.635
+Brooklyn       16800    0   20  1.332  22376             20   33.044
+Manhattan       8353    0   21  1.217  10167             21   15.014
+Queens         14744    0   20  1.346  19842             20   29.302
+Staten Island   2506    0   13  1.352   3389             13    5.005
+      number_of_cyclist_injured  number_of_cyclist_killed  number_of_motorist_injured  ...  number_of_pedestrian_killed  number_of_persons_injured  number_of_persons_killed
+year                                                                                   ...                                                                                  
+2025                       5114                        21                       32405  ...                          113                      47734                       211
+2026                       1879                        10                       13830  ...                           43                      19983                        83
+
+[2 rows x 8 columns]
+hour
+0     2389
+1      975
+2      787
+3      642
+4      768
+5      881
+6     1336
+7     1935
+8     2526
+9     2199
+10    2014
+11    2168
+12    2397
+13    2615
+14    3023
+15    3240
+16    3256
+17    3370
+18    3160
+19    2831
+20    2469
+21    2293
+22    1910
+23    1640
+Name: crash_count, dtype: int64
+
+contributing_factors (60 unique values):
+contributing_factors
+driver inattention/distraction                           16030
+failure to yield right-of-way                             6295
+following too closely                                     3676
+other vehicular                                           2954
+unsafe speed                                              2328
+traffic control disregarded                               2221
+passing or lane usage improper                            1951
+pedestrian/bicyclist/other pedestrian error/confusion     1498
+driver inexperience                                       1341
+turning improperly                                        1321
+Name: count, dtype: int64
+
+vehicle_types (301 unique values):
+vehicle_types
+sedan                                  33297
+station wagon/sport utility vehicle    27322
+bike                                    5456
+taxi                                    2723
+4 dr sedan                              2619
+pick-up truck                           2124
+motorcycle                              1844
+moped                                   1672
+e-bike                                  1449
+bus                                     1433
+Name: count, dtype: int64
+
+contributing_factors in Bronx:
+contributing_factors
+driver inattention/distraction    2447
+failure to yield right-of-way      828
+other vehicular                    628
+following too closely              549
+unsafe speed                       544
+Name: count, dtype: int64
+
+contributing_factors in Brooklyn:
+contributing_factors
+driver inattention/distraction    4944
+failure to yield right-of-way     2076
+following too closely             1120
+other vehicular                   1005
+traffic control disregarded        778
+Name: count, dtype: int64
+
+contributing_factors in Manhattan:
+contributing_factors
+driver inattention/distraction                           2890
+failure to yield right-of-way                             965
+following too closely                                     531
+other vehicular                                           513
+pedestrian/bicyclist/other pedestrian error/confusion     496
+Name: count, dtype: int64
+
+contributing_factors in Queens:
+contributing_factors
+driver inattention/distraction    4835
+failure to yield right-of-way     2141
+following too closely             1328
+traffic control disregarded        712
+other vehicular                    684
+Name: count, dtype: int64
+
+contributing_factors in Staten Island:
+contributing_factors
+driver inattention/distraction    914
+failure to yield right-of-way     285
+following too closely             148
+unsafe speed                      127
+other vehicular                   124
+Name: count, dtype: int64
+
+vehicle_types in Bronx:
+vehicle_types
+sedan                                  5462
+station wagon/sport utility vehicle    4361
+bike                                    567
+4 dr sedan                              466
+taxi                                    358
+Name: count, dtype: int64
+
+vehicle_types in Brooklyn:
+vehicle_types
+sedan                                  11110
+station wagon/sport utility vehicle     9265
+bike                                    1779
+4 dr sedan                               828
+motorcycle                               760
+Name: count, dtype: int64
+
+vehicle_types in Manhattan:
+vehicle_types
+sedan                                  4138
+station wagon/sport utility vehicle    3255
+bike                                   1909
+taxi                                   1323
+e-bike                                  440
+Name: count, dtype: int64
+
+vehicle_types in Queens:
+vehicle_types
+sedan                                  10653
+station wagon/sport utility vehicle     8874
+bike                                    1101
+4 dr sedan                               769
+pick-up truck                            684
+Name: count, dtype: int64
+
+vehicle_types in Staten Island:
+vehicle_types
+sedan                                  1933
+station wagon/sport utility vehicle    1567
+4 dr sedan                              185
+pick-up truck                           182
+bike                                    100
+Name: count, dtype: int64
+
+
+
+
+
